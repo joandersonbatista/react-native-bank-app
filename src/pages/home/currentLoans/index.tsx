@@ -1,11 +1,11 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import { hp, wp } from "../../resnponsive";
 
-import CardCreditIcon from "../../assets/cardCreditIcon.svg";
-import ArrowIcon from "../../assets/arrow.svg";
-import PlusIcon from "../../assets/plus.svg";
+import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import { hp, wp } from "../../../../resnponsive";
+
+import CardCreditIcon from "../../../../assets/cardCreditIcon.svg";
+import ArrowIcon from "../../../../assets/arrow.svg";
+import PlusIcon from "../../../../assets/plus.svg";
 
 export default function CurrentLoans() {
   return (

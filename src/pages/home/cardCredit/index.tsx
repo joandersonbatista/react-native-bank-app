@@ -1,10 +1,13 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { hp, wp } from "../../resnponsive";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { hp, wp } from "../../../../resnponsive";
 
-import VisaLogo from "../../assets/visaLogo.svg";
+import VisaLogo from "../../../../assets/visaLogo.svg";
+import { RootStackParamList } from "../routes";
+
+type ScreenProps = NavigationProp<RootStackParamList, "Home">;
 
 interface IProps {
   backgrounColor: string;
@@ -13,7 +16,7 @@ interface IProps {
   value: number;
 }
 
-export default function CardContainer({
+export default function CardCredit({
   value,
   backgrounColor,
   first,
@@ -40,8 +43,14 @@ export default function CardContainer({
     getBacground();
   }, [backgrounColor]);
 
+  const navigate = useNavigation<ScreenProps>();
+
+  function HandleNavgation() {
+    navigate.navigate("MyCards");
+  }
+
   return (
-    <TouchableOpacity activeOpacity={0.9}>
+    <TouchableOpacity activeOpacity={0.9} onPress={() => HandleNavgation()}>
       <LinearGradient
         colors={background}
         style={[

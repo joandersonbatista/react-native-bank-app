@@ -1,16 +1,14 @@
-/* eslint-disable react-native/no-inline-styles */
-
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SvgProps } from "react-native-svg";
-import { hp, wp } from "../../resnponsive";
+import { hp, wp } from "../../../../resnponsive";
 
 interface IProps {
   title: string;
   backgroundColor: string;
   first?: boolean;
   last?: boolean;
-  Icon: React.FC<SvgProps>; // type .png
+  Icon: React.FC<SvgProps>;
 }
 
 export default function CardFinances({

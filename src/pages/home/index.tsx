@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import {
   Image,
@@ -12,19 +11,18 @@ import {
 import { hp, wp } from "../../../resnponsive";
 
 // components
-import CardContainer from "../../components/cardContainer";
-import CardFinances from "../../components/cardFinances";
+import CardCredit from "./cardCredit";
+import CardFinances from "./cardFinances";
 import Header from "../../components/header";
-import CurrentLoans from "../../components/CurrentLoans";
+import CurrentLoans from "./currentLoans";
 import Span from "../../components/span";
-import CurrenciesAndMetal from "../../components/currenciesAndMetal";
+import CurrenciesAndMetal from "./currenciesAndMetal";
 
 // assets
 import StarIcon from "../../../assets/starIcon.svg";
 import BudgetIcon from "../../../assets/budgetIcon.svg";
 import FinanceIcon from "../../../assets/financeIcon.svg";
 import SearchIcon from "../../../assets/searchIcon.svg";
-import chevronLeftIcon from "../../../assets/chevron-left.png";
 import Ellipse from "../../../assets/Ellipse.png";
 import Ellipse2 from "../../../assets/Ellipse2.png";
 import Ellipse3 from "../../../assets/Ellipse3.png";
@@ -48,9 +46,9 @@ export default function Home() {
           style={{ marginTop: hp(20) }}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          <CardContainer backgrounColor="blue" first value={2.235} />
-          <CardContainer backgrounColor="yellow" value={6.597} />
-          <CardContainer backgrounColor="violet" last value={4.258} />
+          <CardCredit backgrounColor="blue" first value={2.235} />
+          <CardCredit backgrounColor="yellow" value={6.597} />
+          <CardCredit backgrounColor="violet" last value={4.258} />
         </ScrollView>
       </View>
       <Text style={styles.textFinance}>FINANCE</Text>
@@ -95,12 +93,7 @@ export default function Home() {
 
         <CurrentLoans />
         <Span />
-        <TouchableOpacity style={styles.loanHeader}>
-          <Image source={chevronLeftIcon} />
-          <Text style={styles.currentLoans}>CURRENCIES AND METALS</Text>
-        </TouchableOpacity>
-        <CurrenciesAndMetal typeCurrencies="Currencie" title="Currencie" />
-        <CurrenciesAndMetal typeCurrencies="Metals" title="Metals" />
+        <CurrenciesAndMetal />
       </View>
     </ScrollView>
   );

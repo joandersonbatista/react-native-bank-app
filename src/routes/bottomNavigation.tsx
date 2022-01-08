@@ -8,7 +8,6 @@ import {
 } from "@react-navigation/bottom-tabs";
 
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Home from "../pages/home";
 import { hp, wp } from "../../resnponsive";
 
 import HomeSvg from "../../assets/Home.svg";
@@ -16,6 +15,7 @@ import ShopeSvg from "../../assets/Shope.svg";
 import CardSvg from "../../assets/Card.svg";
 import ChatSvg from "../../assets/Chat.svg";
 import HistorySvg from "../../assets/History.svg";
+import HomeStack from "../pages/home/routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,27 +26,27 @@ export default function BottomTab() {
       tabBar={(props) => <TabBar {...props} />}>
       <Tab.Screen
         name="home"
-        component={Home}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Shope"
-        component={Home}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Card"
-        component={Home}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Chat"
-        component={Home}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="History"
-        component={Home}
+        component={HomeStack}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

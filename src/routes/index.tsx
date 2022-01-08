@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import BottomTab from "./bottomTab";
+import MyStack from "./stackNavigation";
 
 export default function Routes() {
   return (
@@ -12,7 +12,7 @@ export default function Routes() {
         backgroundColor="#1E1F1F"
       />
       <NavigationContainer>
-        <BottomTab />
+        <MyStack />
       </NavigationContainer>
     </>
   );

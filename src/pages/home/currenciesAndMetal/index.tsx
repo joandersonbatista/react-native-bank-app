@@ -1,16 +1,17 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { SvgProps } from "react-native-svg";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { hp, wp } from "../../resnponsive";
 
-import DolarIcon from "../../assets/dolarIcon.svg";
-import EuroIcon from "../../assets/euroIcon.svg";
-import MetalIcon from "../../assets/metalIcon.svg";
+import { SvgProps } from "react-native-svg";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { hp, wp } from "../../../../resnponsive";
+
+import DolarIcon from "../../../../assets/dolarIcon.svg";
+import EuroIcon from "../../../../assets/euroIcon.svg";
+import MetalIcon from "../../../../assets/metalIcon.svg";
+import chevronLeftIcon from "../../../../assets/chevron-left.png";
 
 interface ItemCurrencieProps {
   coin: "USD" | "EUR" | "GOLD" | "SILVER";
-  Icon: React.FC<SvgProps>; // type png
+  Icon: React.FC<SvgProps>;
 }
 
 function ItemCurrencie({ coin, Icon }: ItemCurrencieProps) {
@@ -37,7 +38,7 @@ interface ICurrenciesAndMetalProps {
   typeCurrencies: "Currencie" | "Metals";
 }
 
-export default function CurrenciesAndMetal({
+function CurrenciesAndMetal({
   title,
   typeCurrencies,
 }: ICurrenciesAndMetalProps) {
@@ -68,6 +69,19 @@ export default function CurrenciesAndMetal({
   );
 }
 
+export default function Index() {
+  return (
+    <>
+      <TouchableOpacity style={styles.loanHeader}>
+        <Image source={chevronLeftIcon} />
+        <Text style={styles.currentLoans}>CURRENCIES AND METALS</Text>
+      </TouchableOpacity>
+      <CurrenciesAndMetal typeCurrencies="Currencie" title="Currencie" />
+      <CurrenciesAndMetal typeCurrencies="Metals" title="Metals" />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: "#B2D0CE",
@@ -85,6 +99,13 @@ const styles = StyleSheet.create({
     width: wp(335),
     marginTop: hp(12),
     borderRadius: hp(26),
+  },
+  currentLoans: {
+    color: "rgba(255, 255, 255, 1)",
+    fontSize: hp(13),
+    lineHeight: hp(14),
+    letterSpacing: 0.3,
+    marginLeft: wp(8),
   },
   currenciesTitle: {
     fontSize: hp(14),
@@ -117,5 +138,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     flex: 1,
+  },
+  loanHeader: {
+    width: wp(335),
+    marginTop: hp(31),
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
