@@ -9,3 +9,6 @@
   <img align="center" alt="" height="500" src="screenShots/Screenshot_1.png">
   <img align="left" alt="" height="500" src="screenShots/Screenshot_2.png">
 </div>
+
+### Gif
+<p><img align="left" alt="" height="500" src="screenShots/designGif.gif"></p>
