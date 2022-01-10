@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   transcitionsBackground: {
     backgroundColor: "#252626",
     flex: 1,
-    marginTop: hp(60),
+    marginTop: hp(31),
     borderTopLeftRadius: hp(30),
     borderTopRightRadius: hp(30),
     alignItems: "center",

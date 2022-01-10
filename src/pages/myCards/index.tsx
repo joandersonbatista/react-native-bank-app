@@ -1,21 +1,32 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, StatusBar } from "react-native";
 
 import ellipse from "../../../assets/Ellipse.png";
 
 import { wp } from "../../../resnponsive";
+import { RootStackParamList } from "../home/routes";
 import CardCredit from "./cardCredit";
 import Header from "./header";
 import Transactions from "./transactions";
 
-export default function MyCards() {
+type Props = NativeStackScreenProps<RootStackParamList, "MyCards">;
+
+export default function MyCards({ route }: Props) {
   return (
-    <View style={styles.background}>
-      <Image source={ellipse} style={styles.blurBackground} />
-      <Header />
-      <CardCredit />
-      <Transactions />
-    </View>
+    <>
+      <StatusBar
+        translucent
+        barStyle="light-content"
+        backgroundColor="transparent"
+      />
+      <View style={styles.background}>
+        <Image source={ellipse} style={styles.blurBackground} />
+        <Header />
+        <CardCredit initialCard={route.params.id} />
+        <Transactions />
+      </View>
+    </>
   );
 }
 

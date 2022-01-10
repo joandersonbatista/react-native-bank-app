@@ -1,33 +1,130 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useEffect, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  Animated,
+} from "react-native";
 
 import LinearGradient from "react-native-linear-gradient";
 import { hp, wp } from "../../../../resnponsive";
 
 import VisaLogo from "../../../../assets/visaLogo.svg";
 import ChipLogo from "../../../../assets/chip.svg";
+import { dataCard, dataProps } from "../../../services/data";
 
-export default function CardCredit() {
+const { width } = Dimensions.get("window");
+
+type IndexProps = { initialCard: string };
+
+export default function Index({ initialCard }: IndexProps) {
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const refScrollX = useRef<FlatList>();
+
+  useEffect(() => {
+    refScrollX.current?.scrollToOffset({
+      offset: Number(initialCard) * width,
+      animated: false,
+    });
+  });
+
   return (
-    <LinearGradient
-      style={styles.cardContainer}
-      colors={["rgba(252, 255, 223, 1)", "rgba(241, 254, 135, 1)"]}>
-      <View style={styles.visaLogoContainer}>
-        <VisaLogo height={hp(47)} width={hp(47)} />
-        <Text style={styles.visaLogoValueText}>$ 5,566.55</Text>
-      </View>
-      <View>
-        <View style={styles.chipContainer}>
-          <ChipLogo />
-          <Text style={styles.validTextOrExpire}>VALID THRU</Text>
-        </View>
+    <View style={{ height: hp(220), marginTop: hp(112) }}>
+      <FlatList
+        horizontal
+        ref={refScrollX as React.LegacyRef<FlatList<dataProps>>}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        pagingEnabled
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: false },
+        )}
+        bounces={false}
+        data={dataCard}
+        renderItem={(data) => <CardCredit {...data.item} />}
+        keyExtractor={(data) => data.id}
+      />
+      <Indicator scrollX={scrollX} />
+    </View>
+  );
+}
+
+function CardCredit({
+  name,
+  number,
+  valid,
+  value,
+  backgroundColor,
+}: dataProps) {
+  return (
+    <View style={{ width, alignItems: "center" }}>
+      <LinearGradient style={styles.cardContainer} colors={backgroundColor}>
         <View style={styles.visaLogoContainer}>
-          <Text style={styles.numberCard}>•••• •••• •••• 4552</Text>
-          <Text style={styles.validTextOrExpire}>12/22</Text>
+          <VisaLogo height={hp(47)} width={hp(47)} />
+          <Text style={styles.visaLogoValueText}>{value}</Text>
         </View>
-      </View>
-      <Text style={styles.validTextOrExpire}>Margo Lepski</Text>
-    </LinearGradient>
+        <View>
+          <View style={styles.chipContainer}>
+            <ChipLogo />
+            <Text style={styles.validTextOrExpire}>VALID THRU</Text>
+          </View>
+          <View style={styles.visaLogoContainer}>
+            <Text style={styles.numberCard}>•••• •••• •••• {number}</Text>
+            <Text style={styles.validTextOrExpire}>{valid}</Text>
+          </View>
+        </View>
+        <Text style={styles.validTextOrExpire}>{name}</Text>
+      </LinearGradient>
+    </View>
+  );
+}
+
+interface IndicatorProps {
+  scrollX: Animated.Value;
+}
+
+function Indicator({ scrollX }: IndicatorProps) {
+  return (
+    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      {dataCard.map((_, index) => {
+        const inputRange = [
+          (index - 1) * width,
+          index * width,
+          (index + 1) * width,
+        ];
+        const scale = scrollX.interpolate({
+          inputRange,
+          outputRange: [hp(2), hp(3.5), hp(2)],
+          extrapolate: "clamp",
+        });
+        const backgroundColor = scrollX.interpolate({
+          inputRange,
+          outputRange: ["#5D5662", "#EDFC74", "#5D5662"],
+          extrapolate: "clamp",
+        });
+        return (
+          <Animated.View
+            key={_.id}
+            style={{
+              backgroundColor,
+              height: hp(3),
+              width: hp(3),
+              margin: wp(6),
+              borderRadius: hp(1.5),
+              transform: [
+                {
+                  scale,
+                },
+              ],
+            }}
+          />
+        );
+      })}
+    </View>
   );
 }
 
@@ -35,13 +132,13 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: hp(184),
     width: wp(311),
-    marginTop: hp(112),
     borderRadius: hp(20),
     paddingLeft: wp(30),
     paddingRight: wp(30),
     paddingTop: hp(20),
     paddingBottom: hp(20),
     justifyContent: "space-between",
+    backgroundColor: "red",
   },
   visaLogoContainer: {
     flexDirection: "row",

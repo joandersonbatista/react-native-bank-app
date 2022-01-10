@@ -5,7 +5,7 @@ import MyCards from "../myCards";
 import Home from ".";
 
 export type RootStackParamList = {
-  MyCards: undefined;
+  MyCards: { id: string };
   Home: undefined;
 };
 

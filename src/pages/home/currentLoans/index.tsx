@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+} from "react-native";
 import { hp, wp } from "../../../../resnponsive";
 
 import CardCreditIcon from "../../../../assets/cardCreditIcon.svg";
@@ -8,31 +14,67 @@ import ArrowIcon from "../../../../assets/arrow.svg";
 import PlusIcon from "../../../../assets/plus.svg";
 
 export default function CurrentLoans() {
+  const [show, setShow] = React.useState(true);
+
+  const heightAnimated = useRef(new Animated.Value(hp(90))).current;
+
+  function handleHidden() {
+    if (show) {
+      Animated.timing(heightAnimated, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: false,
+      }).start();
+      return setShow(false);
+    }
+    Animated.timing(heightAnimated, {
+      toValue: hp(90),
+      duration: 150,
+      useNativeDriver: false,
+    }).start();
+    return setShow(true);
+  }
+
   return (
     <>
       <View style={styles.loanHeader}>
         <TouchableOpacity
+          onPress={() => handleHidden()}
           style={{ flexDirection: "row", alignItems: "center" }}>
-          <ArrowIcon />
+          <Animated.View
+            style={{
+              transform: [
+                {
+                  rotate: heightAnimated.interpolate({
+                    inputRange: [0, hp(90)],
+                    outputRange: ["-90deg", "0deg"],
+                  }),
+                },
+              ],
+            }}>
+            <ArrowIcon />
+          </Animated.View>
           <Text style={styles.currentLoans}>CURRENT LOANS</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonLoan}>
           <PlusIcon />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.itemCurrentLoan}>
-        <View style={styles.iconContainer}>
-          <CardCreditIcon stroke="black" />
-        </View>
-        <View>
-          <Text style={styles.accountNumber}>Accoount Nº 38745825</Text>
-          <Text style={styles.accountExpires}>Expires 12/22/2023</Text>
-        </View>
-        <View style={styles.value}>
-          <Text style={styles.accountNumber}>$ 78,92</Text>
-          <Text style={styles.accountExpires}>Rate 3.5%</Text>
-        </View>
-      </TouchableOpacity>
+      <Animated.View style={{ overflow: "hidden", height: heightAnimated }}>
+        <TouchableOpacity style={styles.itemCurrentLoan}>
+          <View style={styles.iconContainer}>
+            <CardCreditIcon stroke="black" />
+          </View>
+          <View>
+            <Text style={styles.accountNumber}>Accoount Nº 38745825</Text>
+            <Text style={styles.accountExpires}>Expires 12/22/2023</Text>
+          </View>
+          <View style={styles.value}>
+            <Text style={styles.accountNumber}>$ 78,92</Text>
+            <Text style={styles.accountExpires}>Rate 3.5%</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     </>
   );
 }

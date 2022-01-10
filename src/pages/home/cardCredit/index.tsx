@@ -1,4 +1,5 @@
 import React from "react";
+
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -6,63 +7,46 @@ import { hp, wp } from "../../../../resnponsive";
 
 import VisaLogo from "../../../../assets/visaLogo.svg";
 import { RootStackParamList } from "../routes";
+import { dataProps } from "../../../services/data";
 
 type ScreenProps = NavigationProp<RootStackParamList, "Home">;
 
-interface IProps {
-  backgrounColor: string;
-  first?: boolean;
-  last?: boolean;
-  value: number;
-}
-
 export default function CardCredit({
   value,
-  backgrounColor,
-  first,
-  last,
-}: IProps) {
-  const [background, setBackground] = React.useState([
-    "rgba(10, 234, 234, 1)",
-    "rgba(178, 208, 50, 1)",
-  ]);
-
-  React.useEffect(() => {
-    function getBacground(): void {
-      if (backgrounColor === "blue") {
-        setBackground(["rgba(234, 234, 234, 1)", "rgba(178, 208, 206, 1)"]);
-      }
-      if (backgrounColor === "yellow") {
-        setBackground(["rgba(252, 255, 223, 1)", "rgba(241, 254, 135, 1)"]);
-      }
-      if (backgrounColor === "violet") {
-        setBackground(["rgba(242, 239, 244, 1)", "rgba(184, 169, 198, 1)"]);
-      }
-    }
-
-    getBacground();
-  }, [backgrounColor]);
-
+  id,
+  number,
+  backgroundColor,
+}: dataProps) {
   const navigate = useNavigation<ScreenProps>();
 
   function HandleNavgation() {
-    navigate.navigate("MyCards");
+    navigate.navigate("MyCards", { id });
+  }
+
+  function getMarginLeft(): number {
+    if (id === "0") return wp(20);
+    return 0;
+  }
+
+  function getMarginRight(): number {
+    if (id === "2") return wp(20);
+    return 0;
   }
 
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={() => HandleNavgation()}>
       <LinearGradient
-        colors={background}
+        colors={backgroundColor}
         style={[
-          { marginLeft: first ? wp(20) : 0, marginRight: last ? wp(20) : 0 },
+          { marginLeft: getMarginLeft(), marginRight: getMarginRight() },
           styles.container,
         ]}>
         <VisaLogo />
         <View>
           <Text style={styles.salary}>Salary</Text>
-          <Text style={styles.money}>$ {value}</Text>
+          <Text style={styles.money}>{value}</Text>
         </View>
-        <Text style={styles.cardNumber}>**6917</Text>
+        <Text style={styles.cardNumber}>**{number}</Text>
       </LinearGradient>
     </TouchableOpacity>
   );
